@@ -13,7 +13,7 @@ import io
 mydb = psycopg2.connect(
     user='postgres',
     host='localhost',
-    password='kameshnavin',
+    password='********',
     database='bizcard',
     port='5432')
 
