@@ -1,7 +1,7 @@
-###Packages
-import streamlit as st
-from streamlit_option_menu import option_menu
 import easyocr
+import streamlit as st
+
+from streamlit_option_menu import option_menu
 from PIL import Image
 import pandas as pd
 import numpy as np
@@ -19,8 +19,14 @@ mydb = psycopg2.connect(
 
 cursor = mydb.cursor()
 
+cursor.execute(
+                        "CREATE TABLE IF NOT EXISTS BUSINESS_CARD(NAME VARCHAR(50), DESIGNATION VARCHAR(100), "
+                        "COMPANY_NAME VARCHAR(100), CONTACT VARCHAR(35), EMAIL VARCHAR(100), WEBSITE VARCHAR("
+                        "100), ADDRESS TEXT, PINCODE VARCHAR(100))")
+mydb.commit()
+
 # SETTING PAGE CONFIGURATIONS
-icon = Image.open("C:\\Users\\HP\\Desktop\\Bizcard\\business_card_home.jpg")
+icon = Image.open("business.jpg")
 st.set_page_config(page_title="BizCardX: Extracting Business Card Data with OCR | By NAVIN N",
                    page_icon=icon,
                    layout="wide",
@@ -38,7 +44,6 @@ def setting_bg():
 
 
 setting_bg()
-
 # CREATING OPTION MENU
 selected = option_menu(None, ["Home", "Upload & Modify", "Delete"],
                        icons=["house", "cloud-upload", "pencil-square"],
@@ -54,7 +59,7 @@ selected = option_menu(None, ["Home", "Upload & Modify", "Delete"],
 if selected == "Home":
     col1, col2 = st.columns(2)
     with col1:
-        st.image(Image.open("C:\\Users\\HP\\Desktop\\Bizcard\\business_card_home.jpg"), width=500)
+        st.image(Image.open("business.jpg"), width=500)
         st.markdown("## :green[**Technologies Used :**] Python,easy OCR, Streamlit, Postgre SQL, Pandas")
     with col2:
         st.write(
